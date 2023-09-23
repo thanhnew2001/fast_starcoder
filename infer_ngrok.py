@@ -5,6 +5,8 @@ from flask import Flask
 from pyngrok import ngrok
 from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
 
+from flask import request, jsonify
+
 model_name = "michaelfeil/ct2fast-starcoder"
 model = GeneratorCT2fromHfHub(
         # load in int8 on CUDA
