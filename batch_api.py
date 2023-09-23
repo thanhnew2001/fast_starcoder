@@ -3,7 +3,7 @@ import requests
 import threading
 import time
 import random
-import ngrok
+from pyngrok import ngrok
 
 app = Flask(__name__)
 port = "4000"
