@@ -41,7 +41,8 @@ def generate_code():
     try:
         # Get the list of prompts from the query string parameter 'prompts'
         prompts = request.args.getlist('prompts')
-        return generate_text_batch(prompts)
+        max_length = int(request.args.get('max_length', 64))
+        return generate_text_batch(prompts, max_length)
 
     except Exception as e:
         return jsonify({"error": str(e)})
