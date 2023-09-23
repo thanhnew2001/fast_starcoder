@@ -41,10 +41,11 @@ def process_batch():
                 id_ = random.randint(100000, 999999)
               
                 # Call the external API with the batch of prompts
-                external_api_url = "https://139a-213-224-31-105.ngrok-free.app/generate_code?max_length=128&"
-                prompts_query = "&".join([f"prompts=#id_{id_}:{prompt['prompt']}" for prompt in batch_prompts])
-                response = requests.get(external_api_url + prompts_query)
-
+                # external_api_url = "https://139a-213-224-31-105.ngrok-free.app/generate_code?max_length=128&"
+                # prompts_query = "&".join([f"prompts=#id_{id_}:{prompt['prompt']}" for prompt in batch_prompts])
+                # response = requests.get(external_api_url + prompts_query)
+                
+                batch_results = ["response1", "response2", "response3"]
                 # Update batch_results with the responses from the external API
                 if response.status_code == 200:
                     response_data = response.json()
