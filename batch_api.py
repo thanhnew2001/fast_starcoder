@@ -5,6 +5,14 @@ import time
 import random
 
 app = Flask(__name__)
+port = "4000"
+
+# Open a ngrok tunnel to the HTTP server
+public_url = ngrok.connect(port).public_url
+print(" * ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}\"".format(public_url, port))
+
+# Update any base URLs to use the public ngrok URL
+app.config["BASE_URL"] = public_url
 
 # Store incoming prompts in a queue with unique IDs
 prompt_queue = []
