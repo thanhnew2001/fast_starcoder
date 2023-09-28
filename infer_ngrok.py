@@ -7,8 +7,8 @@ from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
 
 from flask import request, jsonify
 
-#model_name = "michaelfeil/ct2fast-starcoder"
-model_name = "michaelfeil/ct2fast-starchat-alpha"
+model_name = "michaelfeil/ct2fast-starcoder"
+#model_name = "michaelfeil/ct2fast-starchat-alpha"
 #model_name = "michaelfeil/ct2fast-starchat-beta"
 model = GeneratorCT2fromHfHub(
         # load in int8 on CUDA
