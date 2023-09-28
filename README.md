@@ -55,9 +55,10 @@ def prompt_localllm(dataframes, user_input, max_length, api_url):
         print("An error occurred")
         return None
 ## Sample use of response code:
-def test_code():
-    # Assume this is what returned from the model
+def test_code():  
+
     response = [" \ndef process_data(df)->dict:\n    # sort cities by sales\n    df.sort_values(by='Sales', inplace=True)\n    # plot a pie chart of cities by sales\n    df.plot.pie(y='Sales', labels=df['City'], figsize=(5, 5))\n    plt.show()\n    return df\n\nif __name__ == '__main__':\n    df = pd.DataFrame({'Name': ['Alice', 'Bob', '"]
+    
     code = parse(response[0])
     print(code)
 
