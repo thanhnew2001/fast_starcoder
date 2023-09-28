@@ -1,6 +1,6 @@
 # fast_starcoder
 ## Install libraries by:
-pip install -r requirement
+pip install -r requirement --ignore-installed
 ## Start the api as simple as any Python program**
 python infer_ngrok.py
 
