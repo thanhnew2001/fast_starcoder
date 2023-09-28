@@ -17,7 +17,7 @@ model = GeneratorCT2fromHfHub(
 )
 
 def generate_text_batch(prompt_texts, max_length=64):
-    outputs = model.generate(prompt_texts, max_length=max_length, include_prompt_in_result=True)
+    outputs = model.generate(prompt_texts, max_length=max_length, include_prompt_in_result=False)
     return outputs
 
 app = Flask(__name__)
