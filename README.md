@@ -12,6 +12,7 @@ If you have a static IP, open the port, i.e. 5000 and use the ip:5000 as the url
 
 ## Sample prompt:
 def prompt_localllm(dataframes, user_input, max_length, api_url):
+    
     import requests
 
     # Define the API endpoint
