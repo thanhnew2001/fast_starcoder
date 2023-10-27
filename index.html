@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proof-reading and Copy-editing</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        .input-text {
+            margin-bottom: 15px;
+        }
+        .response-text {
+            margin-bottom: 15px;
+        }
+        .scrollable-text {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+        .waiting-message {
+            display: none;
+        }
+    </style>
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">Proof-reading and Copy-editing</h1>
+
+    <!-- Input text area -->
+    <textarea id="inputText" class="form-control input-text" rows="10" placeholder="Enter text here" oninput="checkInputLength()"></textarea>
+
+    <!-- Input length display -->
+    <div id="inputLengthDisplay" class="mb-3">Number of Words: 0</div>
+
+    <!-- Correct button -->
+    <button id="correctButton" class="btn btn-primary" onclick="correctText()">Correct</button>
+    <!-- Waiting message -->
+    <div id="waitingMessage" class="alert alert-info waiting-message">Please wait...</div>
+
+    <hr>
+
+    <!-- Response text area -->
+    
+    <textarea id="responseText" class="form-control response-text" rows="10" placeholder="Response will appear here"></textarea>
+
+    <!-- Conversation history (scrollable text div) -->
+    <h2 class="mt-4">Conversation History</h2>
+    <div id="conversationHistory" class="scrollable-text"></div>
+
+    <script>
+        function checkInputLength() {
+            const userInput = document.getElementById("inputText").value;
+            // Split the input into words using whitespace as a delimiter
+            const words = userInput.split(/\s+/).filter(word => word !== ""); // Filter out empty strings
+            document.getElementById("inputLengthDisplay").textContent = "Number of Words: " + words.length;
+        }
+
+        function correctText() {
+            // Display waiting message
+            document.getElementById("waitingMessage").style.display = "block";
+
+            // Get user input
+            const userInput = document.getElementById("inputText").value;
+
+            // Check if the number of words exceeds the limit
+            const words = userInput.split(/\s+/).filter(word => word !== "");
+            if (words.length > 256) {
+                alert("The number of words is greater than 256. Please correct your input.");
+                return;
+            }
+
+            // Send user input to API and receive a response
+            // Replace 'YOUR_API_URL' with the actual API endpoint
+            YOUR_API_URL = "";
+
+            fetch('https://4edd-142-112-54-19.ngrok-free.app/generate_code?max_length=256&prompts=' + userInput, {
+                method: 'GET',
+                headers: new Headers({
+                    "ngrok-skip-browser-warning": "69420",
+                }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Hide waiting message
+                document.getElementById("waitingMessage").style.display = "none";
+
+                // Display the response in the response text area
+                answer = data.replace(/\["|\"]/g, ''); // Replaces '[' or ']' with an empty string
+                answer = answer.replace(/\n/g, '');
+                answer = answer.replace(/^\s+/g, '');
+
+                document.getElementById("responseText").value = answer;
+
+                // Update conversation history
+                const conversationHistory = document.getElementById("conversationHistory");
+                conversationHistory.innerHTML += "<br>"
+                conversationHistory.innerHTML += "<b>User:</b> " + userInput + "<br>";
+                conversationHistory.innerHTML += "<b>Bot:</b> " + answer + "<br>";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Hide waiting message in case of an error
+                document.getElementById("waitingMessage").style.display = "none";
+            });
+        }
+    </script>
+
+    <!-- Add Bootstrap and jQuery JS libraries for Bootstrap functionality -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
