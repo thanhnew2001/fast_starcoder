@@ -2,6 +2,7 @@ import os
 import threading
 
 from flask import Flask
+from flask_cors import CORS, cross_origin
 from pyngrok import ngrok
 from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
 
@@ -38,7 +39,9 @@ app.config["BASE_URL"] = public_url
 def index():
     return "Hello from Colab!"
 
+
 @app.route('/generate_code', methods=['GET'])
+@cross_origin(resources={r"/*": {"origins": "*"}})
 def generate_code():
     try:
         # Get the list of prompts from the query string parameter 'prompts'
