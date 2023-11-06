@@ -60,7 +60,7 @@ def generate_code():
         })
 
     except Exception as e:
-        return jsonify({"error": str(e})
+        return jsonify({"error": str(e)})
 
 
 # Start the Flask server in a new thread
