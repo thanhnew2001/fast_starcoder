@@ -38,7 +38,7 @@ app.config["BASE_URL"] = public_url
 def index():
     return "Hello from Colab!"
 
-@app.route("/api/generate/", methods=["POST"])
+@app.route("/api/generate", methods=["POST"])
 def generate_code():
     try:
         # Get the JSON data from the request body
