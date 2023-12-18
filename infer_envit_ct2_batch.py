@@ -8,8 +8,10 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 
 def translate(texts):
     input_tokens_list = []
+    
     for text in texts:
-        encoded = tokenizer.encode(text)
+        template = f"""translate English to Vietnamese: {text}"""
+        encoded = tokenizer.encode(template)
         tokens = tokenizer.convert_ids_to_tokens(encoded)
         input_tokens_list.append(tokens)
 
