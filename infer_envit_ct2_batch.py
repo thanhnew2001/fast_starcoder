@@ -8,9 +8,13 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 
 def translate(texts):
     input_texts = [f"translate English to Vietnamese: {text}" for text in texts]
-    input_tokens = [tokenizer.encode(text, add_special_tokens=True) for text in input_texts]
+    input_ids = [tokenizer.encode(text, add_special_tokens=True, return_attention_mask=False) for text in input_texts]
     
-    results = translator.translate_batch(input_tokens)
+    # Ensure input_ids is a list of lists
+    if not all(isinstance(ids, list) for ids in input_ids):
+        raise ValueError("Input must be a list of lists of token IDs.")
+
+    results = translator.translate_batch(input_ids)
     
     output_texts = []
     for result in results:
@@ -19,6 +23,7 @@ def translate(texts):
         output_texts.append(output_text)
     
     return output_texts
+
 
 app = Flask(__name__)
 
