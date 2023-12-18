@@ -9,6 +9,7 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 def translate(texts):
     input_texts = [f"translate English to Vietnamese: {text}" for text in texts]
     input_ids = [tokenizer.encode(text, add_special_tokens=True, return_attention_mask=False) for text in input_texts]
+    print(input_ids)
     
     # Ensure input_ids is a list of lists
     if not all(isinstance(ids, list) for ids in input_ids):
