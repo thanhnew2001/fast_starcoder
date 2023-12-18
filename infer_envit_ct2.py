@@ -8,7 +8,7 @@ model_name = "envit-ct2"
 translator = ctranslate2.Translator(model_name)
 tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 
-def translate(text=text):
+def translate(text):
   input_text = f"""translate English to Vietnamese: {text}"""
   input_tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(input_text))
   
@@ -22,7 +22,7 @@ def translate(text=text):
 app = Flask(__name__)
 
 @app.route('/translate', methods=['POST'])
-def translate():
+def translate_api():
   try:
     data = request.get_json()
     text = data['text']
