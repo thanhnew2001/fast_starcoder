@@ -8,7 +8,7 @@ model_name = "envit-ct2"
 translator = ctranslate2.Translator(model_name)
 tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 
-def translate(text):
+def translate(text=text):
   input_text = f"""translate English to Vietnamese: {text}"""
   input_tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(input_text))
   
