@@ -7,25 +7,22 @@ translator = ctranslate2.Translator(model_name)
 tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
 
 def translate(texts):
-    input_texts = [f"translate English to Vietnamese: {text}" for text in texts]
-    input_ids = [tokenizer.encode(text, add_special_tokens=True, return_attention_mask=False) for text in input_texts]
-    print(input_ids)
-    
-    # Ensure input_ids is a list of lists
-    if not all(isinstance(ids, list) for ids in input_ids):
-        raise ValueError("Input must be a list of lists of token IDs.")
+    input_tokens_list = []
+    for text in texts:
+        encoded = tokenizer.encode(text)
+        tokens = tokenizer.convert_ids_to_tokens(encoded)
+        input_tokens_list.append(tokens)
 
-    results = translator.translate_batch(input_ids)
-    
-    output_texts = []
+    # Call translate_batch with the list of tokenized texts
+    # results = translator.translate_batch(tokenized_texts, batch_type='tokens', max_batch_size=50)
+    results = translator.translate_batch(input_tokens_list)
+    output_text_list = []
     for result in results:
-        output_tokens = result[0]["tokens"]
-        output_text = tokenizer.decode(output_tokens, skip_special_tokens=True)
-        output_texts.append(output_text)
-    
-    return output_texts
-
-
+        output_tokens = result.hypotheses[0]
+        output_text = tokenizer.decode(tokenizer.convert_tokens_to_ids(output_tokens))
+        print(output_text)    
+        output_text_list.append(output_text)
+    return output_text_list
 app = Flask(__name__)
 
 @app.route('/translate', methods=['POST'])
@@ -36,10 +33,8 @@ def translate_api():
         if not isinstance(texts, list):
             raise ValueError("Input 'texts' must be a list of strings.")
         
-        translations = translate(texts)
-        
+        translations = translate(texts)        
         return jsonify({'translations': translations})
-
     except Exception as e:
         return jsonify({"error": str(e)})
 
